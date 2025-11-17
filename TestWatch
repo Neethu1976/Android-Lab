@@ -1,0 +1,113 @@
+package com.example.testwatch;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
+public class MainActivity extends AppCompatActivity {
+
+    LinearLayout rootLayout;
+    ToggleButton toggleButton;
+    CheckBox checkBox;
+    EditText editText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        rootLayout = findViewById(R.id.rootLayout);
+        toggleButton = findViewById(R.id.toggleButton);
+        checkBox = findViewById(R.id.checkBox);
+        editText = findViewById(R.id.editTextNumber);
+
+
+        toggleButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                rootLayout.setBackgroundResource(R.drawable.anna);
+            } else {
+                rootLayout.setBackgroundResource(R.drawable.elsa);
+            }
+        });
+
+
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                Toast.makeText(MainActivity.this, "Checkbox Selected!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Checkbox Unselected!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (!text.isEmpty()) {
+                    try {
+                        int value = Integer.parseInt(text);
+                        if (value > 100) {
+                            editText.setText("100");
+                            editText.setSelection(editText.getText().length());
+                            Toast.makeText(MainActivity.this, "Maximum value is 100!", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (NumberFormatException e) {
+                        // Ignore invalid input
+                    }
+                }
+            }
+        });
+    }
+}
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:background="#FFFFFF">
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Enter number"
+        android:inputType="number" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Check me" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textOn="Background ON"
+        android:textOff="Background OFF" />
+</LinearLayout>
