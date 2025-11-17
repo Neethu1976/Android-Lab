@@ -1,0 +1,94 @@
+package com.example.markemoji;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Button sub;
+        sub = (Button) findViewById(R.id.submit);
+        sub.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.submit){
+            EditText a,b,c;
+            ImageView img;
+            a=findViewById(R.id.m1);
+            b=findViewById(R.id.m2);
+            c=findViewById(R.id.m3);
+            img = (ImageView) findViewById(R.id.resimg);
+            int m1,m2,m3;
+            float res;
+            m1=Integer.parseInt(a.getText().toString());
+            m2=Integer.parseInt(b.getText().toString());
+            m3=Integer.parseInt(c.getText().toString());
+            res = (float) (m1+m2+m3)/3;
+            if(res>50){
+                img.setImageResource(R.drawable.pass);
+            }
+            else{
+                img.setImageResource(R.drawable.fail);
+            }
+        }
+    }
+}
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:hint="Enter Mark1"
+        android:id="@+id/m1"/>
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:hint="Enter Mark2"
+        android:id="@+id/m2"/>
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:hint="Enter Mark3"
+        android:id="@+id/m3"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/submit"/>
+
+    <ImageView
+        android:id="@+id/resimg"
+        android:layout_width="85dp"
+        android:layout_height="102dp" />
+
+</LinearLayout>
